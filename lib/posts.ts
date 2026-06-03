@@ -10,6 +10,24 @@ import type { Category } from "./categories";
 
 const postsDirectory = path.join(process.cwd(), "posts");
 
+// 递归获取所有 .md 文件（支持子目录分类）
+function getAllMdFiles(dir: string): string[] {
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+  const files: string[] = [];
+
+  for (const entry of entries) {
+    if (entry.name.startsWith("_") || entry.name.startsWith(".")) continue;
+    const fullPath = path.join(dir, entry.name);
+    if (entry.isDirectory()) {
+      files.push(...getAllMdFiles(fullPath));
+    } else if (entry.isFile() && entry.name.endsWith(".md")) {
+      files.push(fullPath);
+    }
+  }
+
+  return files;
+}
+
 export interface Post {
   slug: string;
   title: string;
@@ -28,12 +46,10 @@ function getReadingTime(text: string): number {
 }
 
 export function getSortedPosts(): Post[] {
-  const fileNames = fs.readdirSync(postsDirectory);
-  const allPosts = fileNames
-    .filter((fileName) => fileName.endsWith(".md") && !fileName.startsWith("_"))
-    .map((fileName) => {
+  const filePaths = getAllMdFiles(postsDirectory);
+  const allPosts = filePaths.map((fullPath) => {
+      const fileName = path.basename(fullPath);
       const slug = fileName.replace(/\.md$/, "");
-      const fullPath = path.join(postsDirectory, fileName);
       const fileContents = fs.readFileSync(fullPath, "utf8");
       const { data, content } = matter(fileContents);
 
@@ -53,15 +69,13 @@ export function getSortedPosts(): Post[] {
 }
 
 export function getAllPostSlugs() {
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames
-    .filter((fileName) => fileName.endsWith(".md") && !fileName.startsWith("_"))
-    .map((fileName) => ({ slug: fileName.replace(/\.md$/, "") }));
+  return getAllMdFiles(postsDirectory)
+    .map((fullPath) => ({ slug: path.basename(fullPath).replace(/\.md$/, "") }));
 }
 
 export function findPostFile(slug: string): string | null {
-  const fileNames = fs.readdirSync(postsDirectory);
-  return fileNames.find((name) => name === `${slug}.md`) || null;
+  const allFiles = getAllMdFiles(postsDirectory);
+  return allFiles.find((f) => path.basename(f) === `${slug}.md`) || null;
 }
 
 async function readPostFile(fullPath: string, slug: string): Promise<Post> {
@@ -89,23 +103,20 @@ async function readPostFile(fullPath: string, slug: string): Promise<Post> {
 }
 
 export async function getPostBySlug(slug: string): Promise<Post> {
-  // 通过遍历目录找到真实文件名，避免中文编码问题
-  const fileName = findPostFile(slug);
-  if (fileName) {
-    const fullPath = path.join(postsDirectory, fileName);
-    return readPostFile(fullPath, slug);
+  const filePath = findPostFile(slug);
+  if (filePath) {
+    return readPostFile(filePath, slug);
   }
 
   // 尝试 URL 解码后再匹配
   const decodedSlug = decodeURIComponent(slug);
-  const matchName = fs.readdirSync(postsDirectory).find((name) => {
-    const s = name.replace(/\.md$/, "");
+  const matchPath = getAllMdFiles(postsDirectory).find((f) => {
+    const s = path.basename(f).replace(/\.md$/, "");
     return s === decodedSlug || s === slug;
   });
 
-  if (matchName) {
-    const fullPath = path.join(postsDirectory, matchName);
-    return readPostFile(fullPath, matchName.replace(/\.md$/, ""));
+  if (matchPath) {
+    return readPostFile(matchPath, path.basename(matchPath).replace(/\.md$/, ""));
   }
 
   throw new Error(`文章不存在: ${slug}`);
