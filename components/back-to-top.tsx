@@ -22,7 +22,7 @@ export default function BackToTop() {
   return (
     <button
       onClick={scrollToTop}
-      className="fixed bottom-8 right-8 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200/80 bg-white/90 shadow-sm backdrop-blur transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-700/80 dark:bg-zinc-900/90 dark:hover:border-zinc-600"
+      className="fixed bottom-8 right-6 z-50 flex h-10 w-10 items-center justify-center rounded-full border border-zinc-200/80 bg-white/90 shadow-sm backdrop-blur transition-all hover:border-zinc-300 hover:shadow-md dark:border-zinc-700/80 dark:bg-zinc-900/90 dark:hover:border-zinc-600"
       aria-label="返回顶部"
     >
       <svg className="h-4 w-4 text-zinc-500 dark:text-zinc-400" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
