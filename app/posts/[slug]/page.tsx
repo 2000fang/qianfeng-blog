@@ -3,6 +3,7 @@ import { getCategory } from "@/lib/categories";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import TableOfContents from "@/components/toc";
+import FloatingToc from "@/components/floating-toc";
 import type { Metadata } from "next";
 
 interface Props {
@@ -87,6 +88,7 @@ export default async function PostPage({ params }: Props) {
         />
       </article>
       <TableOfContents />
+      <FloatingToc />
     </div>
   );
 }
