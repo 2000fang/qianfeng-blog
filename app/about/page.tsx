@@ -14,7 +14,7 @@ export default function AboutPage() {
 
       <div className="mt-8 space-y-5 text-zinc-600 leading-relaxed dark:text-zinc-400">
         <p>
-          嘿，我是谦锋，一名热爱技术的开发者。
+          我是谦锋，一名热爱技术的开发者。
         </p>
         <p>
           这个博客是我的数字花园 🌱，用来记录日常工作中的技术探索、项目实践的踩坑与收获，
