@@ -16,10 +16,13 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "qianfeng 的博客",
-    template: "%s · qianfeng",
+    default: "Qianfeng 的博客",
+    template: "%s · Qianfeng",
   },
-  description: "记录工作、生活与学习心得的个人博客",
+  description: "记录技术探索、项目实践、读书心得与工作思考的个人博客",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

@@ -11,7 +11,7 @@ export default function Home() {
       {/* 个人介绍 */}
       <section className="mb-16">
         <h1 className="text-4xl font-bold tracking-tight text-zinc-900 dark:text-zinc-100">
-          嘿，我是 qianfeng 👋
+          你好，欢迎来到我的博客 
         </h1>
         <p className="mt-4 max-w-xl text-lg leading-relaxed text-zinc-500 dark:text-zinc-400">
           用文字记录技术探索、项目实践、读书心得与工作思考。让每一个想法都有迹可循。

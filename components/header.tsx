@@ -18,7 +18,7 @@ export default function Header() {
           href="/"
           className="text-lg font-semibold tracking-tight text-zinc-900 transition-colors hover:text-zinc-600 dark:text-zinc-100 dark:hover:text-zinc-400"
         >
-          ~qianfeng
+          Qianfeng
         </Link>
         <nav className="flex items-center gap-6">
           {navLinks.map(({ href, label }) => (
