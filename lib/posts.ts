@@ -59,8 +59,12 @@ export function getAllPostSlugs() {
     .map((fileName) => ({ slug: fileName.replace(/\.md$/, "") }));
 }
 
-export async function getPostBySlug(slug: string): Promise<Post> {
-  const fullPath = path.join(postsDirectory, `${slug}.md`);
+export function findPostFile(slug: string): string | null {
+  const fileNames = fs.readdirSync(postsDirectory);
+  return fileNames.find((name) => name === `${slug}.md`) || null;
+}
+
+async function readPostFile(fullPath: string, slug: string): Promise<Post> {
   const fileContents = fs.readFileSync(fullPath, "utf8");
   const { data, content } = matter(fileContents);
 
@@ -82,6 +86,29 @@ export async function getPostBySlug(slug: string): Promise<Post> {
     content: contentHtml,
     readingTime: getReadingTime(content),
   };
+}
+
+export async function getPostBySlug(slug: string): Promise<Post> {
+  // 通过遍历目录找到真实文件名，避免中文编码问题
+  const fileName = findPostFile(slug);
+  if (fileName) {
+    const fullPath = path.join(postsDirectory, fileName);
+    return readPostFile(fullPath, slug);
+  }
+
+  // 尝试 URL 解码后再匹配
+  const decodedSlug = decodeURIComponent(slug);
+  const matchName = fs.readdirSync(postsDirectory).find((name) => {
+    const s = name.replace(/\.md$/, "");
+    return s === decodedSlug || s === slug;
+  });
+
+  if (matchName) {
+    const fullPath = path.join(postsDirectory, matchName);
+    return readPostFile(fullPath, matchName.replace(/\.md$/, ""));
+  }
+
+  throw new Error(`文章不存在: ${slug}`);
 }
 
 export function getPostsByTag(tag: string): Post[] {
