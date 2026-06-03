@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getSortedPosts } from "@/lib/posts";
 import { categoryList } from "@/lib/categories";
-import PostCard from "@/components/post-card";
+import PostList from "@/components/post-list";
 
 export default function Home() {
   const posts = getSortedPosts();
@@ -52,11 +52,7 @@ export default function Home() {
             还没有文章，在 posts/ 目录下添加 .md 文件吧 ✨
           </p>
         ) : (
-          <div className="grid gap-4">
-            {posts.map((post) => (
-              <PostCard key={post.slug} post={post} />
-            ))}
-          </div>
+          <PostList posts={posts} />
         )}
       </section>
     </div>

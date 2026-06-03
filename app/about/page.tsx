@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "关于",
-  description: "关于 Qianfeng 和他的博客",
+  description: "关于谦锋 和他的博客",
 };
 
 export default function AboutPage() {
@@ -14,7 +14,7 @@ export default function AboutPage() {
 
       <div className="mt-8 space-y-5 text-zinc-600 leading-relaxed dark:text-zinc-400">
         <p>
-          嘿，我是 Qianfeng，一名热爱技术的开发者。
+          嘿，我是谦锋，一名热爱技术的开发者。
         </p>
         <p>
           这个博客是我的数字花园 🌱，用来记录日常工作中的技术探索、项目实践的踩坑与收获，
