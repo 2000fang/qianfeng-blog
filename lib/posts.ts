@@ -30,7 +30,7 @@ function getReadingTime(text: string): number {
 export function getSortedPosts(): Post[] {
   const fileNames = fs.readdirSync(postsDirectory);
   const allPosts = fileNames
-    .filter((fileName) => fileName.endsWith(".md"))
+    .filter((fileName) => fileName.endsWith(".md") && !fileName.startsWith("_"))
     .map((fileName) => {
       const slug = fileName.replace(/\.md$/, "");
       const fullPath = path.join(postsDirectory, fileName);
@@ -55,7 +55,7 @@ export function getSortedPosts(): Post[] {
 export function getAllPostSlugs() {
   const fileNames = fs.readdirSync(postsDirectory);
   return fileNames
-    .filter((fileName) => fileName.endsWith(".md"))
+    .filter((fileName) => fileName.endsWith(".md") && !fileName.startsWith("_"))
     .map((fileName) => ({ slug: fileName.replace(/\.md$/, "") }));
 }
 
