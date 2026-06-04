@@ -14,7 +14,7 @@ export default function Home() {
           你好，欢迎来到我的博客 
         </h1>
         <p className="mt-4 max-w-xl text-lg leading-relaxed text-zinc-500 dark:text-zinc-400">
-          用文字记录技术探索、项目实践、读书心得与工作思考。让每一个想法都有迹可循。
+          记录技术探索、项目实践与读书思考。同时分享学业指导干货——数学物理考点解析、高效学习方法、成长故事，助力每一位求学路上的你。
         </p>
       </section>
 

@@ -1,4 +1,4 @@
-export type Category = "reading" | "thoughts" | "work" | "project";
+export type Category = "reading" | "thoughts" | "work" | "project" | "education";
 
 export interface CategoryInfo {
   key: Category;
@@ -41,6 +41,14 @@ export const categories: Record<Category, CategoryInfo> = {
     color: "emerald",
     bg: "bg-emerald-50 dark:bg-emerald-950/30",
     text: "text-emerald-700 dark:text-emerald-400",
+  },
+  education: {
+    key: "education",
+    label: "学业指导",
+    emoji: "🎓",
+    color: "sky",
+    bg: "bg-sky-50 dark:bg-sky-950/30",
+    text: "text-sky-700 dark:text-sky-400",
   },
 };
 
