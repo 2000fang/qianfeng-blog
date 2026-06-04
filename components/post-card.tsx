@@ -37,10 +37,10 @@ export default function PostCard({ post }: { post: Post }) {
           {post.excerpt}
         </p>
       )}
-      <div className="mt-4 flex items-center gap-4 text-sm text-zinc-400 dark:text-zinc-500">
+      <div className="mt-4 flex flex-wrap items-center gap-4 text-sm text-zinc-400 dark:text-zinc-500">
         {formattedDate && <time dateTime={post.date}>{formattedDate}</time>}
         {post.tags.length > 0 && (
-          <div className="flex gap-1.5">
+          <div className="flex flex-wrap gap-1.5">
             {post.tags.map((tag) => (
               <span
                 key={tag}
